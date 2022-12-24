@@ -8,6 +8,10 @@ const routes = [
 		path: "/",
 		component: () => import("../views/Main.vue"),
 	},
+	{
+		path: "/classrooms",
+		component: () => import("../views/Classrooms.vue"),
+	},
 ];
 
 const router = new VueRouter({

@@ -9,10 +9,11 @@
 					max-width="35"
 					contain
 				></v-img>
-				<v-toolbar-title>Расписания Школы ЦПМ</v-toolbar-title>
+				<v-toolbar-title>Расписание Школы ЦПМ</v-toolbar-title>
 				<template v-slot:extension>
 					<v-tabs align-with-title>
-						<v-tab to="/">Main</v-tab>
+						<v-tab to="/">Расписание</v-tab>
+						<v-tab to="/classrooms">Кабинеты</v-tab>
 					</v-tabs>
 				</template>
 			</v-app-bar>
