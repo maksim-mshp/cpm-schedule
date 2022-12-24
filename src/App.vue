@@ -1,55 +1,42 @@
 <template>
-  <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
+	<v-app>
+		<v-main>
+			<v-app-bar app color="purple" dark>
+				<v-img
+					class="mx-2"
+					src="./assets/logo.png"
+					max-height="35"
+					max-width="35"
+					contain
+				></v-img>
+				<v-toolbar-title>Расписания Школы ЦПМ</v-toolbar-title>
+				<template v-slot:extension>
+					<v-tabs align-with-title>
+						<v-tab to="/">Main</v-tab>
+					</v-tabs>
+				</template>
+			</v-app-bar>
 
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
-      </div>
-
-      <v-spacer></v-spacer>
-
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
-
-    <v-main>
-      <router-view/>
-    </v-main>
-  </v-app>
+			<div class="main-view">
+				<router-view />
+			</div>
+		</v-main>
+	</v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+	name: "App",
 
-  data: () => ({
-    //
-  }),
+	data: () => ({
+		//
+	}),
 };
 </script>
+
+<style scoped>
+.main-view {
+    padding: 20px;
+	height: 100%;
+}
+</style>
