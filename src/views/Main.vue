@@ -11,64 +11,68 @@
 		</tr>
 		<tr>
 			<th>1 пара<br>(9:00 - 10:30)</th>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
 		</tr>
 		<tr>
 			<th>2 пара<br>(10:40 - 12:10)</th>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
 		</tr>
 		<tr>
 			<th>3 пара<br>(12:50 - 14:20)</th>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
 		</tr>
 		<tr>
 			<th>4 пара<br>(14:30 - 16:00)</th>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
 		</tr>
 		<tr>
 			<th>5 пара<br>(16:15 - 17:45)</th>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
-			<td>Математика</td>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
+			<Lesson/>
 		</tr>
 	</table>
 </template>
 
 <script>
+import Lesson from '@/components/table/Lesson.vue'
 export default {
 	name: "Main",
+	components: {
+		Lesson
+	}
 };
 </script>
 
 <style scoped>
-td, th {
+th {
 	border: 1px solid #999;
 }
-
 td {
+	border: 1px solid #999;
 	text-align: center;
 }
 
