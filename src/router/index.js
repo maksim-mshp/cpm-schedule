@@ -9,6 +9,10 @@ const routes = [
 		component: () => import("../views/Main.vue"),
 	},
 	{
+		path: "/login",
+		component: () => import("../views/Login.vue"),
+	},
+	{
 		path: "/classrooms",
 		component: () => import("../views/Classrooms.vue"),
 	},

@@ -1,15 +1,19 @@
 <template>
 	<v-app>
 		<v-main>
-			<v-app-bar app color="purple" dark>
+			<v-app-bar app color="purple" dark v-if="!is_login">
 				<v-img
 					class="mx-2"
-					src="./assets/logo.png"
+					src="@/assets/logo.png"
 					max-height="35"
 					max-width="35"
 					contain
 				></v-img>
 				<v-toolbar-title>Расписание Школы ЦПМ</v-toolbar-title>
+				<v-spacer />
+				<v-btn text color="white" @click="logout"
+					>Выход<v-icon right>mdi-logout-variant</v-icon>
+				</v-btn>
 				<template v-slot:extension>
 					<v-tabs align-with-title>
 						<v-tab to="/">Расписание</v-tab>
@@ -19,7 +23,8 @@
 			</v-app-bar>
 
 			<div class="main-view">
-				<router-view />
+				<div v-if="!is_login" style="padding: 20px; height: 100%"><router-view /></div>
+				<router-view v-else />
 			</div>
 		</v-main>
 	</v-app>
@@ -27,17 +32,38 @@
 
 <script>
 export default {
-	name: "App",
-
+	name: "Main",
 	data: () => ({
-		//
+		is_login: location.pathname == "/login",
+		role: ''
 	}),
+	methods: {
+		logout() {
+			localStorage.removeItem("auth");
+			this.is_login = true;
+			this.$router.replace("/login");
+		},
+		redirect() {
+			this.auth = localStorage.getItem("auth") != null;
+			if (!this.auth && window.location.pathname != "/login") {
+				localStorage.setItem('alert', 'alert');
+				this.$router.replace("/login");
+			}
+		}
+	},
+	mounted() {
+		this.redirect();
+	},
+	watch: {
+		$route(to, from) {
+			this.is_login = location.pathname == "/login";
+		},
+	},
 };
 </script>
 
 <style scoped>
 .main-view {
-    padding: 20px;
 	height: 100%;
 }
 </style>
