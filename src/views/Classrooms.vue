@@ -87,6 +87,10 @@ export default {
 			];
 		},
 	},
+	mounted() {
+		if (localStorage.getItem('auth') != 'admin')
+			this.$router.replace('/');
+	}
 };
 </script>
 

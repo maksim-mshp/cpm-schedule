@@ -14,10 +14,11 @@
 				<v-btn text color="white" @click="logout"
 					>Выход<v-icon right>mdi-logout-variant</v-icon>
 				</v-btn>
-				<template v-slot:extension>
+				<template v-slot:extension  v-if="role == 'admin'">
 					<v-tabs align-with-title>
 						<v-tab to="/">Расписание</v-tab>
 						<v-tab to="/classrooms">Кабинеты</v-tab>
+						<v-tab to="/configs">Конфигурации</v-tab>
 					</v-tabs>
 				</template>
 			</v-app-bar>
@@ -45,6 +46,7 @@ export default {
 		},
 		redirect() {
 			this.auth = localStorage.getItem("auth") != null;
+			this.role = localStorage.getItem("auth");
 			if (!this.auth && window.location.pathname != "/login") {
 				localStorage.setItem('alert', 'alert');
 				this.$router.replace("/login");
@@ -57,6 +59,7 @@ export default {
 	watch: {
 		$route(to, from) {
 			this.is_login = location.pathname == "/login";
+			this.redirect();
 		},
 	},
 };

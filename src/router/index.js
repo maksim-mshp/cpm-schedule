@@ -15,6 +15,10 @@ const routes = [
 	{
 		path: "/classrooms",
 		component: () => import("../views/Classrooms.vue"),
+	},,
+	{
+		path: "/configs",
+		component: () => import("../views/Configs.vue"),
 	},
 ];
 

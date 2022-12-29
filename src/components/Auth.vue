@@ -67,18 +67,19 @@ export default {
 	}),
 	methods: {
 		auth() {
-			localStorage.setItem("auth", "admin");
+			if (this.login == "admin") localStorage.setItem("auth", "admin");
+			else localStorage.setItem("auth", "teacher");
 			this.$router.replace("/");
 		},
 	},
-    computed: {
-        alert_type() {
-            return localStorage.getItem("alert");
-        }
-    },
-    mounted() {
-        localStorage.removeItem('alert');
-    }
+	computed: {
+		alert_type() {
+			return localStorage.getItem("alert");
+		},
+	},
+	mounted() {
+		localStorage.removeItem("alert");
+	},
 };
 </script>
 
