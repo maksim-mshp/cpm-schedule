@@ -3,7 +3,7 @@
 		<p>Здравствуйте, {name}. <br />Выберите свою рабочую нагрузку.</p>
 		<TeacherTable @update-hours="update" />
 		<p class="total">Итого: {{ hours }} рабочих час{{ ending }}</p>
-		<v-btn color="purple" x-large dark>Сохранить</v-btn>
+		<v-btn color="purple" x-large dark @click="send">Сохранить</v-btn>
 	</div>
 </template>
 
@@ -25,6 +25,9 @@ export default {
 			if (this.hours == 2 || this.hours == 4) this.ending = "а";
 			else this.ending = "ов";
 			this.lessons = n[1];
+		},
+		send() {
+			
 		},
 	},
 };
