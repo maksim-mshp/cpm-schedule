@@ -1,6 +1,9 @@
 <template>
 	<div class="table-wrapper">
-		<TeacherTable />
+		<p>Здравствуйте, {name}. <br />Выберите свою рабочую нагрузку.</p>
+		<TeacherTable @update-hours="update" />
+		<p class="total">Итого: {{ hours }} рабочих час{{ ending }}</p>
+		<v-btn color="purple" x-large dark>Сохранить</v-btn>
 	</div>
 </template>
 
@@ -11,14 +14,34 @@ export default {
 	components: {
 		TeacherTable,
 	},
+	data: () => ({
+		hours: 0,
+		lessons: {},
+		ending: "ов",
+	}),
+	methods: {
+		update(n) {
+			this.hours = n[0] * 2;
+			if (this.hours == 2 || this.hours == 4) this.ending = "а";
+			else this.ending = "ов";
+			this.lessons = n[1];
+		},
+	},
 };
 </script>
 
 <style scoped>
 .table-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+	margin: auto;
+	height: 100%;
+}
+
+.table-wrapper p {
+	display: block;
+	font-size: 1.5em;
+}
+
+.total {
+	padding-top: 10px;
 }
 </style>

@@ -69,6 +69,7 @@ export default {
 			friday: [],
 			saturday: [],
 		},
+		hours: 0,
 	}),
 	methods: {
 		select(day, lesson) {
@@ -89,9 +90,12 @@ export default {
 				this.lessons[day] = this.lessons[day].filter(function (item) {
 					return item !== lesson;
 				});
+				this.hours--;
 			} else {
 				this.lessons[day].push(lesson);
+				this.hours++;
 			}
+			this.$emit("update-hours", [this.hours, this.lessons]);
 		},
 	},
 };
