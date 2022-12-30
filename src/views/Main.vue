@@ -7,7 +7,7 @@
 
 <script>
 import MainTable from "@/components/admin/Table.vue";
-import Teacher from "@/components/Teacher.vue";
+import Teacher from "@/components/teacher/Teacher.vue";
 export default {
 	name: "Main",
 	components: {

@@ -11,7 +11,7 @@
 						v-if="alert_type == 'alert'"
 						>Для продолжения необходимо войти</v-alert
 					>
-					<v-alert color="red" outlined text type="error" v-if="wrong"
+					<v-alert color="red" outlined text type="error" v-if="alert_type == 'wrong'"
 						>Неправильный логин или пароль</v-alert
 					>
 					<div>

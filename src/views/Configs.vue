@@ -31,7 +31,7 @@ export default {
 .excel-wrapper {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: start;
+	justify-content: flex-start;
 	padding: 10px;
 }
 @media (min-width: 1000px) {
