@@ -128,4 +128,10 @@ table tr:hover {
 .checked {
 	background-color: #9c27b0;
 }
+
+@media (max-width: 1400px) {
+	table {
+		width: 100%;
+	}
+}
 </style>

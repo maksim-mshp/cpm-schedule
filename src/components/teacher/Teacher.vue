@@ -22,12 +22,29 @@ export default {
 	methods: {
 		update(n) {
 			this.hours = n[0] * 2;
-			if (this.hours == 2 || this.hours == 4) this.ending = "а";
+			if (
+				(this.hours < 10 || this.hours > 20) &&
+				(this.hours % 10 == 2 || this.hours % 10 == 4)
+			)
+				this.ending = "а";
 			else this.ending = "ов";
 			this.lessons = n[1];
 		},
 		send() {
-			
+			this.$toast.success("Сохранено!", {
+				position: "top-right",
+				timeout: 5000,
+				closeOnClick: false,
+				pauseOnFocusLoss: true,
+				pauseOnHover: true,
+				draggable: true,
+				draggablePercent: 0.6,
+				showCloseButtonOnHover: false,
+				hideProgressBar: false,
+				closeButton: "button",
+				icon: true,
+				rtl: false,
+			});
 		},
 	},
 };

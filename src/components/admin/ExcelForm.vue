@@ -1,5 +1,5 @@
 <template>
-	<v-form ref="form" v-model="valid" lazy-validation class="excel-form">
+	<v-form ref="form" lazy-validation class="excel-form">
 		<v-radio-group v-model="type" :rules="check_type">
 			<v-radio
 				label="Нагрузка преподавателей"
@@ -29,7 +29,13 @@
 			prepend-icon="mdi-file-excel-box"
 		/>
 
-		<v-btn color="purple" class="mr-4" @click="submit" dark>
+		<v-btn
+			color="purple"
+			class="mr-4"
+			@click="submit"
+			:dark="isFormValid"
+			:disabled="!isFormValid"
+		>
 			Отправить
 		</v-btn>
 	</v-form>
@@ -48,7 +54,20 @@ export default {
 
 	methods: {
 		submit() {
-			this.$refs.form.validate();
+			this.$toast.success("Сохранено!", {
+				position: "top-right",
+				timeout: 5000,
+				closeOnClick: false,
+				pauseOnFocusLoss: true,
+				pauseOnHover: true,
+				draggable: true,
+				draggablePercent: 0.6,
+				showCloseButtonOnHover: false,
+				hideProgressBar: false,
+				closeButton: "button",
+				icon: true,
+				rtl: false,
+			});
 		},
 	},
 
@@ -58,6 +77,9 @@ export default {
 		},
 		check_file() {
 			return [this.file != null || "Обязательное поле"];
+		},
+		isFormValid() {
+			return this.type != null && this.file != null;
 		},
 	},
 };

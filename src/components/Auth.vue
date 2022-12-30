@@ -18,8 +18,8 @@
 						<h1>Вход</h1>
 						<div class="login_form">
 							<v-text-field
-								label="Email"
-								placeholder="Email"
+								label="Логин"
+								placeholder="Логин"
 								color="purple"
 								v-model="login"
 							></v-text-field>
