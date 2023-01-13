@@ -11,7 +11,12 @@
 						v-if="alert_type == 'alert'"
 						>Для продолжения необходимо войти</v-alert
 					>
-					<v-alert color="red" outlined text type="error" v-if="alert_type == 'wrong'"
+					<v-alert
+						color="red"
+						outlined
+						text
+						type="error"
+						v-if="alert_type == 'wrong' || wrong"
 						>Неправильный логин или пароль</v-alert
 					>
 					<div>
@@ -67,8 +72,14 @@ export default {
 	}),
 	methods: {
 		auth() {
-			if (this.login == "admin") localStorage.setItem("auth", "admin");
-			else localStorage.setItem("auth", "teacher");
+			if (this.login == "admin")
+				localStorage.setItem("auth", "admin");
+			else if (this.login == "teacher")
+				localStorage.setItem("auth", "teacher");
+			else {
+				this.wrong = true;
+				return;
+			}
 			this.$router.replace("/");
 		},
 	},
