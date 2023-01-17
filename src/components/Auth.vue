@@ -8,7 +8,7 @@
 						outlined
 						text
 						type="info"
-						v-if="alert_type == 'alert'"
+						v-if="alert_type == 'alert' && !wrong"
 						>Для продолжения необходимо войти</v-alert
 					>
 					<v-alert
