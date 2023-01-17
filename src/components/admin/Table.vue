@@ -2,7 +2,14 @@
     <div style="height: 100%">
         <table v-if="schedule != null">
             <tr class="table-header">
-                <th></th>
+                <th class="buttons">
+                    <v-btn icon color="green">
+                        <v-icon>mdi-plus-circle</v-icon>
+                    </v-btn>
+                    <v-btn icon color="blue" @click="send">
+                        <v-icon>mdi-content-save</v-icon>
+                    </v-btn>
+                </th>
                 <th>Понедельник</th>
                 <th>Вторник</th>
                 <th>Среда</th>
@@ -138,8 +145,55 @@ export default {
         card: null,
         cells: null,
         schedule: null,
+        schedule_new: null,
+        fab: false,
     }),
     methods: {
+        send() {
+            this.axios
+                .put(
+                    "https://api.jsonbin.io/v3/b/63c6bdf3dfc68e59d584def4",
+                    this.schedule_new
+                )
+                .then((response) => {
+                    this.$toast.success("Сохранено!", {
+                        position: "top-right",
+                        timeout: 5000,
+                        closeOnClick: false,
+                        pauseOnFocusLoss: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        draggablePercent: 0.6,
+                        showCloseButtonOnHover: false,
+                        hideProgressBar: false,
+                        closeButton: "button",
+                        icon: true,
+                        rtl: false,
+                    });
+                });
+        },
+        convert(n) {
+            let a = parseInt(n[1]),
+                b = parseInt(n[3]);
+            let days_by_number = [
+                null,
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+            ];
+            return [days_by_number[a], b];
+        },
+        swap(last_id, new_id) {
+            last_id = this.convert(last_id);
+            new_id = this.convert(new_id);
+
+            this.schedule_new[new_id[0]][new_id[1]] =
+                this.schedule_new[last_id[0]][last_id[1]];
+            this.schedule_new[last_id[0]][last_id[1]] = null;
+        },
         set_draggable() {
             let self = this;
             self.card = document.querySelector("td div");
@@ -174,11 +228,9 @@ export default {
                 let last_id = self.card.dataset.lesson;
                 let new_id = this.id;
 
-                document.querySelector("#" + last_id).classList.add("empty");
-                document.querySelector("#" + new_id).classList.remove("empty");
                 self.card.dataset.lesson = new_id;
 
-                // self.card = document.querySelector("td div");
+                self.swap(last_id, new_id);
 
                 let cell = document.querySelector("#" + last_id);
 
@@ -213,8 +265,7 @@ export default {
             let h = document
                 .querySelector("table")
                 .getBoundingClientRect().height;
-            h = (h - 35) / 5;
-            console.log(h);
+            h = (h - 41) / 5;
             document.querySelectorAll("td").forEach((i) => {
                 i.style["height"] = h + "px";
                 i.style["max-height"] = h + "px";
@@ -225,10 +276,11 @@ export default {
     mounted() {
         this.axios
             .get(
-                "https://gist.githubusercontent.com/maksim-mshp/d392a65fc7cd5fba60ef00b6d5df69b3/raw/8627d10503f4be5e9942f8c39c4aca919552d416/schedule.json"
+                "https://api.jsonbin.io/v3/b/63c6bdf3dfc68e59d584def4?meta=false"
             )
             .then((response) => {
                 this.schedule = response.data;
+                this.schedule_new = structuredClone(this.schedule);
                 setTimeout(() => {
                     this.set_height();
                     this.set_draggable();
@@ -247,7 +299,7 @@ th {
 }
 
 .table-header {
-    height: 35px !important;
+    height: 40px !important;
 }
 
 table {
@@ -255,6 +307,11 @@ table {
     height: 100%;
     border-collapse: collapse;
     table-layout: fixed;
+}
+
+.buttons {
+    border: none;
+    text-align: left;
 }
 /* table tr:hover {
 	background-color: #eee;
