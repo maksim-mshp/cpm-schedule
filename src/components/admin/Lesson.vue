@@ -29,6 +29,7 @@ div, .v-chip {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
     /* border: 1px solid #999; */
     cursor: move;
 }

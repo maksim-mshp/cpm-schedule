@@ -1,5 +1,16 @@
 <template>
-    <div style="height: 100%">
+    <div class="main-wrapper">
+        <div v-if="schedule != null" class="sidebar">
+            <v-select :items="items" v-model="view" outlined dense></v-select>
+            <div class="trash" id="trash">
+                <Lesson
+                    v-for="(item, index) in schedule_new.trash"
+                    :key="index"
+                    :lesson="'t' + index"
+                    :data="item"
+                />
+            </div>
+        </div>
         <table v-if="schedule != null">
             <tr class="table-header">
                 <th class="buttons">
@@ -146,7 +157,10 @@ export default {
         cells: null,
         schedule: null,
         schedule_new: null,
+        trash: null,
         fab: false,
+        items: ["Класс", "Преподаватель", "Аудитория"],
+        view: "Класс",
     }),
     methods: {
         send() {
@@ -187,6 +201,42 @@ export default {
             return [days_by_number[a], b];
         },
         swap(last_id, new_id) {
+            if (last_id[0] == "t" && new_id[0] == "t") {
+                return;
+            }
+
+            if (last_id[0] == "t") {
+                new_id = this.convert(new_id);
+                last_id = last_id.substr(1);
+
+                this.schedule_new[new_id[0]][new_id[1]] =
+                    this.schedule_new.trash[last_id];
+                // this.schedule_new.trash.splice(last_id, 1);
+
+                delete this.schedule_new.trash[last_id];
+
+                return;
+            }
+
+            if (new_id[0] == "t") {
+                let last_td_tmp = last_id;
+
+                last_id = this.convert(last_id);
+                new_id = this.schedule_new[last_id[0]][last_id[1]].id;
+
+                document.querySelector(
+                    'div[data-lesson="' + last_td_tmp + '"]'
+                ).dataset.lesson = "t" + new_id;
+
+                this.schedule_new.trash[new_id] =
+                    this.schedule_new[last_id[0]][last_id[1]];
+                // this.schedule_new.trash.splice(last_id, 1);
+
+                this.schedule_new[last_id[0]][last_id[1]] = null;
+
+                return;
+            }
+
             last_id = this.convert(last_id);
             new_id = this.convert(new_id);
 
@@ -196,25 +246,40 @@ export default {
         },
         set_draggable() {
             let self = this;
-            self.card = document.querySelector("td div");
+            self.card = document.querySelector("td > div, .trash > div");
             self.cells = document.querySelectorAll("td");
+            self.trash = document.querySelector(".trash");
 
             let dragStart = function () {
                 setTimeout(() => {
                     this.classList.add("hide");
                     self.card = this;
+                    document.querySelectorAll(".trash > * ").forEach((i) => {
+                        i.classList.remove("hovered");
+                    });
                 }, 0);
             };
             let dragEnd = function () {
                 this.classList.remove("hide");
+                document.querySelectorAll(".trash > * ").forEach((i) => {
+                    i.classList.remove("hovered");
+                });
             };
 
             let dragEnter = function (event) {
                 event.preventDefault();
                 this.classList.add("hovered");
+
+                if (this.id == "trash")
+                    document.querySelectorAll(".trash > * ").forEach((i) => {
+                        i.classList.add("hovered");
+                    });
             };
             let dragLeave = function () {
                 this.classList.remove("hovered");
+                document.querySelectorAll(".trash > * ").forEach((i) => {
+                    i.classList.remove("hovered");
+                });
             };
 
             let dragOver = function (event) {
@@ -228,23 +293,27 @@ export default {
                 let last_id = self.card.dataset.lesson;
                 let new_id = this.id;
 
-                self.card.dataset.lesson = new_id;
-
                 self.swap(last_id, new_id);
+                let cell;
 
-                let cell = document.querySelector("#" + last_id);
+                if (last_id[0] != "t") {
+                    cell = document.querySelector("#" + last_id);
 
-                cell.addEventListener("dragover", dragOver);
-                cell.addEventListener("dragenter", dragEnter);
-                cell.addEventListener("dragleave", dragLeave);
-                cell.addEventListener("drop", dragDrop);
+                    cell.addEventListener("dragover", dragOver);
+                    cell.addEventListener("dragenter", dragEnter);
+                    cell.addEventListener("dragleave", dragLeave);
+                    cell.addEventListener("drop", dragDrop);
+                }
 
-                cell = document.querySelector("#" + new_id);
+                if (new_id != "trash") {
+                    self.card.dataset.lesson = new_id;
+                    cell = document.querySelector("#" + new_id);
 
-                cell.removeEventListener("dragover", dragOver);
-                cell.removeEventListener("dragenter", dragEnter);
-                cell.removeEventListener("dragleave", dragLeave);
-                cell.removeEventListener("drop", dragDrop);
+                    cell.removeEventListener("dragover", dragOver);
+                    cell.removeEventListener("dragenter", dragEnter);
+                    cell.removeEventListener("dragleave", dragLeave);
+                    cell.removeEventListener("drop", dragDrop);
+                }
             };
 
             self.cells.forEach((cell) => {
@@ -256,7 +325,12 @@ export default {
                 }
             });
 
-            document.querySelectorAll("td div").forEach((i) => {
+            self.trash.addEventListener("dragover", dragOver);
+            self.trash.addEventListener("dragenter", dragEnter);
+            self.trash.addEventListener("dragleave", dragLeave);
+            self.trash.addEventListener("drop", dragDrop);
+
+            document.querySelectorAll("td > div, .trash > div").forEach((i) => {
                 i.addEventListener("dragstart", dragStart);
                 i.addEventListener("dragend", dragEnd);
             });
@@ -298,6 +372,31 @@ th {
     width: 2%;
 }
 
+.main-wrapper {
+    height: 100%;
+    display: flex;
+}
+
+.sidebar {
+    height: 100%;
+    width: calc(100% / 8 + 60px);
+    padding-right: 5px;
+}
+
+.trash {
+    height: calc(100% - 44px);
+    overflow-y: scroll;
+}
+
+.trash > * {
+    max-height: calc((100vh - 192px) / 5);
+    border: 1px solid #999;
+}
+
+.trash > *:not(:first-child) {
+    margin-top: -1px;
+}
+
 .table-header {
     height: 40px !important;
 }
@@ -322,6 +421,7 @@ table {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 </style>
 
@@ -331,5 +431,8 @@ table {
 }
 .hovered {
     background-color: #d1d8e2;
+}
+.sidebar .v-text-field__details {
+    display: none;
 }
 </style>
