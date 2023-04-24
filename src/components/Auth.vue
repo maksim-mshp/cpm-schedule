@@ -25,7 +25,7 @@
 							<v-text-field
 								label="Логин"
 								placeholder="Логин"
-								color="purple"
+								color="#575fce"
 								v-model="login"
 							></v-text-field>
 							<v-text-field
@@ -38,12 +38,12 @@
 								@click:append="show_pass = !show_pass"
 								label="Пароль"
 								placeholder="Пароль"
-								color="purple"
+								color="#575fce"
 								v-model="password"
 							></v-text-field>
 							<div class="btn_wrap" align="center">
 								<v-btn
-									color="purple"
+									color="#575fce"
 									class="white--text"
 									style="width: 125px; margin-top: 25px"
 									@click="auth"

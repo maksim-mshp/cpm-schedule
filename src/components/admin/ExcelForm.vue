@@ -4,22 +4,22 @@
 			<v-radio
 				label="Нагрузка преподавателей"
 				value="workload"
-				color="purple"
+				color="#575fce"
 			></v-radio
 			><v-radio
 				label="Расписание преподавателей (когда препод может)"
 				value="schedule"
-				color="purple"
+				color="#575fce"
 			></v-radio
 			><v-radio
 				label="Кабинеты"
 				value="classrooms"
-				color="purple"
+				color="#575fce"
 			></v-radio>
 		</v-radio-group>
 
 		<v-file-input
-			color="purple"
+			color="#575fce"
 			label="Выберите файл"
 			accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
 			outlined
@@ -30,7 +30,7 @@
 		/>
 
 		<v-btn
-			color="purple"
+			color="#575fce"
 			class="mr-4"
 			@click="submit"
 			:dark="isFormValid"

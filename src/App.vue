@@ -1,15 +1,15 @@
 <template>
 	<v-app>
 		<v-main>
-			<v-app-bar app color="purple" dark v-if="!is_login">
+			<v-app-bar app color="#575fce" dark v-if="!is_login">
 				<v-img
 					class="mx-2"
-					src="@/assets/logo.png"
+					src="@/assets/logo.jpg"
 					max-height="35"
-					max-width="35"
+					max-width="200"
 					contain
 				></v-img>
-				<v-toolbar-title>Расписание Школы ЦПМ</v-toolbar-title>
+				<v-toolbar-title>Расписание</v-toolbar-title>
 				<v-spacer />
 				<v-btn text color="white" @click="logout"
 					>Выход<v-icon right>mdi-logout-variant</v-icon>
